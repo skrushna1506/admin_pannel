@@ -4,6 +4,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { AppearanceForm } from "@/components/appearance-form"
 import { BrandingForm } from "@/components/branding-form"
 import { PaymentForm } from "@/components/payment-form"
+import { CartForm } from "@/components/cart-form"
+import { ProductDisplayForm } from "@/components/product-display-form"
+import { ShippingForm } from "@/components/shipping-form"
+import { OrderManagementForm } from "@/components/order-management-form"
 
 export default function ConfigurePage() {
   const params = useParams()
@@ -24,6 +28,49 @@ export default function ConfigurePage() {
       googlePay: false,
       bankTransfer: true,
     },
+    cartConfig: {
+      enabled: true
+    },
+    productDisplay: {
+      layout: "grid" as const,
+      showRatings: true,
+      showSeller: true,
+      showPrice: true,
+      enableQuickView: true,
+      itemsPerRow: 3 as const
+    },
+    shipping: {
+      enablePinCodeCheck: true,
+      enableDeliveryEstimates: true,
+      showDeliveryCharge: true,
+      baseDeliveryCharge: 40,
+      addressFields: [
+        { key: "flatNo", label: "Flat, House no, Building", required: true, enabled: true },
+        { key: "street", label: "Area, Street, Sector, Village", required: true, enabled: true },
+        { key: "city", label: "City/Town", required: true, enabled: true },
+        { key: "pincode", label: "Pincode", required: true, enabled: true },
+        { key: "state", label: "State/Province", required: true, enabled: true },
+        { key: "country", label: "Country", required: true, enabled: true },
+        { key: "phone", label: "Mobile Number", required: true, enabled: true },
+      ]
+    },
+    orderManagement: {
+      enableOrderTracking: true,
+      enablePushNotifications: true,
+      showOrderHistory: true,
+      itemsPerPage: 10,
+      enableInvoiceDownload: true,
+      showCancelButton: true,
+      cancelTimeLimit: 24,
+      orderStatuses: [
+        { key: "pending", label: "Order Pending", enabled: true, showEstimatedTime: false },
+        { key: "confirmed", label: "Order Confirmed", enabled: true, showEstimatedTime: true },
+        { key: "processing", label: "Processing", enabled: true, showEstimatedTime: true },
+        { key: "shipped", label: "Shipped", enabled: true, showEstimatedTime: true },
+        { key: "delivered", label: "Delivered", enabled: true, showEstimatedTime: false },
+        { key: "cancelled", label: "Cancelled", enabled: true, showEstimatedTime: false }
+      ]
+    }
   }
 
   return (
@@ -37,7 +84,11 @@ export default function ConfigurePage() {
         <TabsList>
           <TabsTrigger value="branding">Branding</TabsTrigger>
           <TabsTrigger value="appearance">Appearance</TabsTrigger>
+          <TabsTrigger value="products">Products</TabsTrigger>
+          <TabsTrigger value="cart">Cart</TabsTrigger>
+          <TabsTrigger value="shipping">Shipping</TabsTrigger>
           <TabsTrigger value="payments">Payments</TabsTrigger>
+          <TabsTrigger value="orders">Orders</TabsTrigger>
         </TabsList>
 
         <TabsContent value="branding" className="space-y-4">
@@ -48,8 +99,24 @@ export default function ConfigurePage() {
           <AppearanceForm appData={appData} />
         </TabsContent>
 
+        <TabsContent value="products" className="space-y-4">
+          <ProductDisplayForm appData={appData} />
+        </TabsContent>
+
+        <TabsContent value="cart" className="space-y-4">
+          <CartForm appData={appData} />
+        </TabsContent>
+
+        <TabsContent value="shipping" className="space-y-4">
+          <ShippingForm appData={appData} />
+        </TabsContent>
+
         <TabsContent value="payments" className="space-y-4">
           <PaymentForm appData={appData} />
+        </TabsContent>
+
+        <TabsContent value="orders" className="space-y-4">
+          <OrderManagementForm appData={appData} />
         </TabsContent>
       </Tabs>
     </div>
