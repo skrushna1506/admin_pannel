@@ -92,3 +92,11 @@ body {
     @apply bg-background text-foreground;
   }
 }
+.reference_card,
+.header_sadow {
+  box-shadow: 0px 100px 80px 0px #00000012 !important;
+}
+.tabs_ec {
+  box-shadow: 0px 100px 80px 0px #00000012 !important;
+  background-color: #fff;
+}
